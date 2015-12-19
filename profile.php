@@ -1,7 +1,7 @@
 <?php
 	//Start session
 	session_start();
-	//Check whether the session variable SESS_MEMBER_ID is present or not
+	
 	if(!isset($_SESSION['SESS_ID']) || (trim($_SESSION['SESS_ID']) == '')) {
 		header("location: index.php");
 		exit();
@@ -22,7 +22,7 @@
 				$val1 = mysql_num_rows($result4);
 				$val2 = mysql_num_rows($result5);
 				
-		
+
 ?>
 
 
@@ -52,7 +52,7 @@
 <?php
 		
 
-$sql="SELECT body,subject,user_ID FROM message where recipient_ids=$id";
+$sql="SELECT body,subject,user_ID FROM message where recipient_ids=$id LIMIT 10";
 
 
 $result= mysql_query($sql) or die(mysql_error());
@@ -80,6 +80,18 @@ while($row3=mysql_fetch_array($result)){
 		<p>Subject:<input type="text" id="subject" name="subject" required ></p>
 		<p>Body:<textarea type="text" id="body" name="body" required placeholder="Enter Message"></textarea> </p>
 		<p><input type="submit"></p>
+		
+		<div>	<?php
+		
+		$messageSent = "";
+		   if(!empty($_GET["q"]))
+			$messageSent = $_GET["q"];
+		    
+		if($messageSent == "message")
+		{
+			echo("Message sent successfully!");
+		}
+?></div>
 
 	</div> 
 </form>
